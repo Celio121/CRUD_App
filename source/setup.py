@@ -7,5 +7,5 @@ def createConn(dbName):
 # Cursor to execute the command and the create table string
 
 def createTable(cursor, query):
-    cursor.execute(query) # Creating table
+    cursor.execute(query)
     return True
