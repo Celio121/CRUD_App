@@ -1,17 +1,17 @@
 import sqlite3
+import pytest
 
 def createConn(dbName):
-
     return sqlite3.connect(dbName)
 
 def test_create_conn():
-    #Creating test database
+    # Set up
     db_name = 'test.db'
 
     # Execute the code being tested
     conn = createConn(db_name)
 
-    # Make assertions about the expected results
+    # Make assertions
     assert isinstance(conn, sqlite3.Connection)
     assert conn.total_changes == 0
 
@@ -29,6 +29,6 @@ def test_create_table():
     result = createTable(cursor, query)
     conn.commit()
 
-    # Make assertions about the expected results
+    # Make assertions
     assert result == True
     assert 'test' in cursor.execute('''SELECT name FROM sqlite_master WHERE type='table';''').fetchone()
