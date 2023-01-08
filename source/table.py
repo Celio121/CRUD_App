@@ -1,4 +1,5 @@
 from setup import createConn, createTable
+from services import getAllData
 
 # defining connection and cursor
 
@@ -16,12 +17,5 @@ PRIMARY KEY(key_id)
 );"""
 createTable(conn, create_keytable)
 
-create_data = conn.cursor().execute(f"""INSERT INTO key_inv
-VALUES(1, 5, '5', True);""")
-conn.commit()
-
 # Display the recently inputted data
-data = conn.cursor().execute(f"""SELECT * 
-FROM key_inv""")
-listData = data.fetchall() # Converts object to usable data
-print(listData)
+print(getAllData(conn, "key_inv"))
