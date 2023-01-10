@@ -2,6 +2,7 @@ import pytest
 import sqlite3
 
 conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
 
 def createRow(conn, query):
     try:
@@ -14,15 +15,16 @@ def createRow(conn, query):
     finally:
         print("This will always run, regardless of whether there is an exception or not")
 
-#Creating conn to database as well as table to run test def, created cursor
-query = 'CREATE TABLE test (id INTEGER, name bool)'
-cursor = conn.cursor()
-
 def test_createRow():
+    # Creation
     cursor = conn.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS test_except
+    (id INTERGER NOT NULL UNIQUE,
+    cont bool NOT NULL
+    );""")
     # testing the exeption to see result will be failed as values are incorrect
     try:
-        result = createRow(conn, "INSERT INTO test VALUES(1, 'exception');")
+        result = createRow(conn, "INSERT INTO test_except VALUES(1, 'exception');")
         assert result == "An exception happened:("
     except Exception: # this will run even if the exception is invalid.
         e = "This will always run, regardless of whether there is an exception or not"
