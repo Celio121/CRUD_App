@@ -50,6 +50,25 @@ def deleteOneConsole(conn):
     """)
     print(getAllData(conn, 'key_inv'))
 
+def test_deleteOneConsole():
+    # Creation
+    conn = sqlite3.connect(':memory:')
+    cursor = conn.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS test2
+    (id INTERGER NOT NULL UNIQUE,
+    cont bool NOT NULL
+    );""")
+    data_ins = createRow(conn, f"INSERT INTO test2 VALUES(2, True);")
+    data_ins2 = createRow(conn, f"INSERT INTO test2 VALUES(3, False);")
+    input = 2
+    delete_data = cursor.execute(f"""DELETE FROM test2 
+    WHERE id = {input};
+    """)
+    # Result
+    result = cursor.execute(f"""SELECT * FROM test2""").fetchone()
+    # Assert
+    assert result == (3, False)
+
 def updateOneConsole(conn):
     print("\nBelow is all the keys registered.")
     print(getAllData(conn, 'key_inv'))
