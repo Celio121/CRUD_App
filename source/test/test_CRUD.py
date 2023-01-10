@@ -1,4 +1,4 @@
-from test_services import createRow
+from test_services import createRow, deleteByid, getAllData, updateByid, getOneRow
 import sqlite3
 import pytest
 
@@ -38,3 +38,44 @@ def test_createRowConsole():
     #show results
     result = cursor.execute("""SELECT * FROM test_table""").fetchone()
     assert result == (1, 2, '3', True)
+
+def deleteOneConsole(conn):
+    id = input("Please enter id of the key you would like to delete: ")
+    deleteByid(conn, id)
+    conn.commit()
+    print("""
+    Deletion is a success!
+    
+    Displaying change in database after deletion below:
+    """)
+    print(getAllData(conn, 'key_inv'))
+
+def updateOneConsole(conn):
+    print("\nBelow is all the keys registered.")
+    print(getAllData(conn, 'key_inv'))
+    ids = input("""\nPlease state which key is taken out of the safe by selecting the ID: """) # User input key id
+    print(f"""\nYou have selected the following Key ID: """ + str(getOneRow(conn, ids)))  # displays the current key selected.
+    cont = input("""\nUpdate whether key is in the safe or not(True False): """) # user input contained value
+    updateByid(conn, ids, cont) # updating key contained value
+    conn.commit()
+    print(getOneRow(conn, ids))
+
+def test_updateOneConsole():
+    # Creation
+    conn = sqlite3.connect(':memory:')
+    cursor = conn.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS test2
+    (id INTERGER NOT NULL UNIQUE,
+    cont bool NOT NULL
+    );""")
+    data_ins = createRow(conn, f"INSERT INTO test2 VALUES(2, True);")
+    id_inp = 2
+    cont_inp = False
+    conn.cursor().execute(f"""
+    UPDATE test2
+    SET cont = {cont_inp}
+    WHERE id = {id_inp};""")
+    # Result
+    result = cursor.execute("SELECT * FROM test2").fetchone()
+    # Assert
+    assert result == (2, False)
