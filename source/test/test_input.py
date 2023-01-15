@@ -9,6 +9,7 @@ import pytest
 conn = createConn('key_dbase.db')
 cursor = conn.cursor()
 
+# Main input to define which function would be executed
 def consoleInput():
     print(
         """
@@ -21,6 +22,7 @@ def consoleInput():
         """
         )
 
+# Testing Main console input
 def test_consoleInput():
     choice = 3 # Setup
     if choice == "1": # Setup 

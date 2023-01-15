@@ -39,6 +39,7 @@ def updateByid(conn, ids, cont):
     SET contained = {cont}
     WHERE key_id = {ids};""")
 
+# returns one line of information from database
 def getOneRow(conn, ids):
     rowInfo = conn.cursor().execute(f"""
         SELECT * 

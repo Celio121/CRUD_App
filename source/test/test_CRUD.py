@@ -13,7 +13,7 @@ def createRowConsole(conn):
 
     createRow(conn, query)
 
-    
+# Testing data creation definition
 def test_createRowConsole():
     # Set up
     conn = sqlite3.connect(':memory:')
@@ -39,6 +39,7 @@ def test_createRowConsole():
     result = cursor.execute("""SELECT * FROM test_table""").fetchone()
     assert result == (1, 2, '3', True)
 
+# User input key id to delete row from table. Once deleted change is commited and data will be deleted.
 def deleteOneConsole(conn):
     id = input("Please enter id of the key you would like to delete: ")
     deleteByid(conn, id)
@@ -50,6 +51,7 @@ def deleteOneConsole(conn):
     """)
     print(getAllData(conn, 'key_inv'))
 
+# Testing delete definition
 def test_deleteOneConsole():
     # Creation
     conn = sqlite3.connect(':memory:')
@@ -69,6 +71,7 @@ def test_deleteOneConsole():
     # Assert
     assert result == (3, False)
 
+# User input to update contained variable in database to define if key is in the safe or not.
 def updateOneConsole(conn):
     print("\nBelow is all the keys registered.")
     print(getAllData(conn, 'key_inv'))
@@ -79,6 +82,7 @@ def updateOneConsole(conn):
     conn.commit()
     print(getOneRow(conn, ids))
 
+# Testing update definition
 def test_updateOneConsole():
     # Creation
     conn = sqlite3.connect(':memory:')

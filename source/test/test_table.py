@@ -3,6 +3,7 @@ import pytest
 
 conn = sqlite3.connect('test_table.db')
 
+# Testing table creation definition
 def test_create_table():
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS key_inv
@@ -20,8 +21,9 @@ PRIMARY KEY(key_id)
     cursor.execute("DROP TABLE key_inv;")
 
 #create database again since it was droppped
-
+# Testing data creation definition
 def test_create_data():
+    # Setup
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS key_inv
 (key_id INTERGER NOT NULL UNIQUE, 
@@ -35,9 +37,12 @@ PRIMARY KEY(key_id)
     conn.commit()
     # Show results
     result = cursor.execute("""SELECT * FROM key_inv""").fetchone()
+    # Assert
     assert result == (1, 5, '5', True)
 
+# Testing retrieving data from database definition
 def test_get_data():
+    # Setup
     cursor = conn.cursor()
     cursor.execute(f"""INSERT INTO key_inv VALUES(2,3,'3',False);""") # Create more data
     conn.commit
@@ -45,7 +50,7 @@ def test_get_data():
     data = cursor.execute(f"""SELECT * FROM key_inv""")
     listData = data.fetchall()
 
-    # Make assertions about the expected results
+    # Assert
     assert listData == [(1, 5, '5', True), (2, 3 ,'3', False)]
 
     cursor.execute("DROP TABLE key_inv;")

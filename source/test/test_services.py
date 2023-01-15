@@ -4,6 +4,7 @@ import sqlite3
 conn = sqlite3.connect(':memory:')
 cursor = conn.cursor()
 
+# code to create a data entry to database
 def createRow(conn, query):
     try:
         conn.cursor().execute(query)
@@ -15,6 +16,7 @@ def createRow(conn, query):
     finally:
         print("This will always run, regardless of whether there is an exception or not")
 
+# Testing data creation definition
 def test_createRow():
     # Creation
     cursor = conn.cursor()
@@ -68,6 +70,7 @@ def getAllData(conn, tableName):
         print(row)
         return True
 
+# Testing retrive all data definition
 def test_getAllData():
     # Creation
     cursor.execute("""CREATE TABLE IF NOT EXISTS test
