@@ -12,9 +12,8 @@ def createRowConsole(conn):
     createRow(conn, query)
 
 # User input key id to delete row from table. Once deleted change is commited and data will be deleted.
-
 def deleteOneConsole(conn):
-    id = input("Please enter id of the key you would like to delete: ")
+    id = input("Please enter id of the key you would like to delete: ") # User input to define key id
     deleteByid(conn, id)
     conn.commit()
     print("""
@@ -24,6 +23,7 @@ def deleteOneConsole(conn):
     """)
     print(getAllData(conn, 'key_inv'))
 
+# User input to update contained variable in database to define if key is in the safe or not. 
 def updateOneConsole(conn):
     print("\nBelow is all the keys registered.")
     print(getAllData(conn, 'key_inv'))
